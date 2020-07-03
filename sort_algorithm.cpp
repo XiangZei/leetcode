@@ -138,8 +138,7 @@ void quickSort(int ary[], int begin, int end)
             j--;
         while (ary[i] <= prinum && i < j)
             i++;
-        if (i < j)
-            swap(ary[i], ary[j]);
+        swap(ary[i], ary[j]);
     }
     cout << "i:" << i << " j:" << j << endl;
     swap(ary[begin], ary[i]);
