@@ -140,10 +140,54 @@ void quickSort(int ary[], int begin, int end)
             i++;
         swap(ary[i], ary[j]);
     }
-    cout << "i:" << i << " j:" << j << endl;
+    // cout << "i:" << i << " j:" << j << endl;
     swap(ary[begin], ary[i]);
     quickSort(ary, begin, i - 1);
-    quickSort(ary, j + 1, end);
+    quickSort(ary, i + 1, end);
+}
+
+void adjustHeap(int ary[], int n, int i)
+{
+    int l = i * 2 + 1;
+    int r = i * 2 + 2;
+    int maxIndex = i;
+    if (l < n && ary[l] > ary[i])
+        maxIndex = l;
+    if (r < n && ary[r] > ary[maxIndex])
+        maxIndex = r;
+    if (maxIndex != i)
+    {
+        swap(ary[i], ary[maxIndex]);
+        adjustHeap(ary, n, maxIndex); //递归调整不满足的部分
+    }
+}
+
+void heapSort(int ary[], int n)
+{
+    // 构建最大堆
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        adjustHeap(ary, n, i);
+    }
+    for (int i = n - 1; i >= 1; i--)
+    {
+        swap(ary[0], ary[i]);
+        adjustHeap(ary, i, 0);
+    }
+}
+void shell_sort(int ary[], int n)
+{
+    int i, j, gap;
+    for (gap = n / 2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < n; i++)
+        {
+            for (j = i; j - gap >= 0 && ary[j - gap] > ary[j]; j -= gap)
+            {
+                swap(ary[j - gap], ary[j]);
+            }
+        }
+    }
 }
 int main()
 {
@@ -161,5 +205,11 @@ int main()
     printAry();
     init();
     quickSort(ary, 0, n - 1);
+    printAry();
+    init();
+    heapSort(ary, n);
+    printAry();
+    init();
+    shell_sort(ary, n);
     printAry();
 }
