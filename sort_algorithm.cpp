@@ -2,7 +2,7 @@
 using namespace std;
 int ary[11], tmp;
 int n = sizeof(ary) / sizeof(*ary);
-
+ 
 void init()
 {
     ary[0] = 10;
