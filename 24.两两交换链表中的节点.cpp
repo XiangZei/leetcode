@@ -22,17 +22,42 @@ struct ListNode {
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        if(!head||!head->next) {
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* prevNode = &dummy;
+        ListNode* fir;
+        ListNode* sec;
+        while(head && head->next) {
+            fir = head;
+            sec = head->next;
+            prevNode->next = sec;
+            fir->next = sec->next;
+            sec->next = fir;
+            prevNode = fir;
+            head = prevNode->next;
+        }
+        return dummy.next;
+    }
+};
+// @lc code=end
+
+class SolutionRecurse
+{
+public:
+    ListNode *swapPairs(ListNode *head)
+    {
+        if (!head || !head->next)
+        {
             return head;
         }
-        ListNode* fir = head;
-        ListNode* sec = head->next;
+        ListNode *fir = head;
+        ListNode *sec = head->next;
         fir->next = swapPairs(sec->next);
         sec->next = fir;
         return sec;
     }
 };
-// @lc code=end
+
 int main() {
     ListNode* l1 = new ListNode(1);
     ListNode* fir = l1;
